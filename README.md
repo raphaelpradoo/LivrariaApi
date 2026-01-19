@@ -4,7 +4,7 @@
 
 ## 📌 Sobre o projeto
 
-Este repositório contém a solução de um desafio prático de uma libraria desenvolvido durante a **Formação C# da Rocketseat**, com o objetivo de aplicar, na prática, os conceitos estudados ao longo do curso.
+Este repositório contém a solução de um desafio prático de uma **Livraria** desenvolvido durante a **Formação C# da Rocketseat**, com o objetivo de aplicar, na prática, os conceitos estudados ao longo do curso.
 
 O desafio propõe ir além do conteúdo visto em aula, incentivando a autonomia, a pesquisa e o desenvolvimento do raciocínio lógico — habilidades fundamentais na formação de um desenvolvedor.
 
@@ -35,9 +35,9 @@ git clone https://github.com/raphaelpradoo/LivrariaApi
 
 - Abra o arquivo .slnx no Visual Studio
 - Abrir o terminal de execução dentro da pasta do projeto e executar os seguintes comandos:
-`dotnet add package Swashbuckle.AspNetCore`
-`dotnet restore`
-`dotnet build`
+`dotnet add package Swashbuckle.AspNetCore`<br>
+`dotnet restore`<br>
+`dotnet build`<br>
 
 ---
 
