@@ -34,7 +34,7 @@ O desafio propõe ir além do conteúdo visto em aula, incentivando a autonomia,
 git clone https://github.com/raphaelpradoo/LivrariaApi
 
 - Abra o arquivo .slnx no Visual Studio
-- Abra o terminal de execução dentro da pasta do projeto e executar os seguintes comandos:<br>
+- Abra o terminal de execução dentro da pasta do projeto e execute os seguintes comandos:<br>
 `dotnet add package Swashbuckle.AspNetCore`<br>
 `dotnet restore`<br>
 `dotnet build`<br>
