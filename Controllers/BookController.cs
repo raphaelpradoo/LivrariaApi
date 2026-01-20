@@ -25,6 +25,19 @@ public class BookController : ControllerBase
         return Ok(Livraria.Livros);
     }
 
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public IActionResult Get(Guid id)
+    {
+        var livro = Livraria.Livros.FirstOrDefault(l => l.Id == id);
+
+        if (livro is null)
+            return NotFound();
+
+        return Ok(livro);
+    }
+
     [HttpPost]
     [ProducesResponseType(typeof(ResponseCreateBookJson), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
