@@ -1,7 +1,12 @@
+using LivrariaApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Lista de Livros
+builder.Services.AddSingleton<BookStore>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

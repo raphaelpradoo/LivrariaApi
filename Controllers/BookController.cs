@@ -9,6 +9,12 @@ namespace LivrariaApi.Controllers;
 [ApiController]
 public class BookController : ControllerBase
 {
+    private readonly BookStore Livraria;
+    public BookController(BookStore livraria)
+    {
+        Livraria = livraria;
+    }
+
     [HttpGet]
     public IActionResult Get()
     {
@@ -28,6 +34,8 @@ public class BookController : ControllerBase
             Genre = request.Genre
         };
 
+        Livraria.Livros.Add(response);
+
         return Created(string.Empty, response);
     }
 
@@ -43,6 +51,9 @@ public class BookController : ControllerBase
             Price = request.Price,
             Stock = request.Stock,
         }).ToList();
+
+        foreach (var livro in responses)
+            Livraria.Livros.Add(livro);
 
         return Created(string.Empty, responses);
     }
