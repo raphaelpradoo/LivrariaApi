@@ -11,4 +11,5 @@ public class ResponseCreateBookJson
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public DateTime Created_At { get; set; } = DateTime.Now;
+    public DateTime Update_At { get; set; }
 }
