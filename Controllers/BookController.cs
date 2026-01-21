@@ -120,4 +120,20 @@ public class BookController : ControllerBase
 
         return Ok(livro);
     }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Delete(Guid id) 
+    {
+        // Verifica se o livro a ser excluido existe
+        var livro = Livraria.Livros.FirstOrDefault(l => l.Id == id);
+
+        if (livro is null)
+            return NotFound();
+
+        Livraria.Livros.RemoveAt(Livraria.Livros.IndexOf(livro));
+
+        return Ok("Livro " + livro.Title + " removido com sucesso.");
+    }
 }
