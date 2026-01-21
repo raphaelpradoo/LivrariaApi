@@ -2,7 +2,7 @@
 
 namespace LivrariaApi.Communication.Response;
 
-public class ResponseCreateBookJson
+public class ResponseBookJson
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Title { get; set; } = string.Empty;
@@ -10,6 +10,6 @@ public class ResponseCreateBookJson
     public Genre Genre { get; set; }
     public decimal Price { get; set; }
     public int Stock { get; set; }
-    public DateTime Created_At { get; set; } = DateTime.Now;
+    public DateTime Created_At { get; set; }
     public DateTime Update_At { get; set; }
 }

@@ -39,9 +39,9 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseCreateBookJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseBookJson), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public IActionResult Create([FromBody] RequestCreateBookJson request) 
+    public IActionResult Create([FromBody] RequestBookJson request) 
     {
         // Verifica se já existe livro com o mesmo título
         bool tituloJaExiste = Livraria.Livros
@@ -50,13 +50,14 @@ public class BookController : ControllerBase
         if (tituloJaExiste)
             return Conflict("Já existe um livro cadastrado com este título.");
 
-        var response = new ResponseCreateBookJson()
+        var response = new ResponseBookJson()
         {
             Title = request.Title,
             Author = request.Author,
             Price = request.Price,
             Stock = request.Stock,
-            Genre = request.Genre
+            Genre = request.Genre,
+            Created_At = DateTime.UtcNow,
         };
 
         Livraria.Livros.Add(response);
@@ -65,8 +66,8 @@ public class BookController : ControllerBase
     }
 
     [HttpPost("create-list")]
-    [ProducesResponseType(typeof(IEnumerable<ResponseCreateBookJson>), StatusCodes.Status201Created)]
-    public IActionResult Create([FromBody] List<RequestCreateBookJson> requests)
+    [ProducesResponseType(typeof(IEnumerable<ResponseBookJson>), StatusCodes.Status201Created)]
+    public IActionResult Create([FromBody] List<RequestBookJson> requests)
     {
         var titlesExistentes = Livraria.Livros
             .Select(l => l.Title)
@@ -74,18 +75,49 @@ public class BookController : ControllerBase
 
         var novosLivros = requests
             .Where(r => titlesExistentes.Add(r.Title)) // Add retorna false se já existir
-            .Select(r => new ResponseCreateBookJson
+            .Select(r => new ResponseBookJson
             {
                 Title = r.Title,
                 Author = r.Author,
                 Genre = r.Genre,
                 Price = r.Price,
-                Stock = r.Stock
+                Stock = r.Stock,
+                Created_At = DateTime.UtcNow
             }).ToList();
 
         foreach (var livro in novosLivros)
             Livraria.Livros.Add(livro);
 
         return Created(string.Empty, novosLivros);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public IActionResult Update(Guid id, [FromBody] RequestBookJson request) 
+    {
+        // Verifica se o livro a ser editado existe
+        var livro = Livraria.Livros.FirstOrDefault(l => l.Id == id);
+
+        if (livro is null)
+            return NotFound();
+
+        // Verifica se já existe livro com o mesmo título
+        bool tituloJaExiste = Livraria.Livros
+            .Any(l => l.Title.Equals(request.Title, StringComparison.OrdinalIgnoreCase));
+
+        if (tituloJaExiste)
+            return Conflict("Já existe um livro cadastrado com este título.");
+
+        livro.Title = request.Title;
+        livro.Author = request.Author;
+        livro.Price = request.Price;
+        livro.Stock = request.Stock;
+        livro.Genre = request.Genre;
+        livro.Update_At = DateTime.UtcNow;
+
+        return Ok(livro);
     }
 }

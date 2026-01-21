@@ -4,5 +4,5 @@ namespace LivrariaApi.Models;
 
 public class BookStore
 {
-    public List<ResponseCreateBookJson> Livros { get; } = new();
+    public List<ResponseBookJson> Livros { get; } = new();
 }

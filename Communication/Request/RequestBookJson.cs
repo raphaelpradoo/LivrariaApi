@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LivrariaApi.Communication.Request;
 
-public class RequestCreateBookJson
+public class RequestBookJson
 {
     [Required(ErrorMessage = "O título é obrigatório.")]
     [StringLength(120, MinimumLength = 2, ErrorMessage = "O título deve ter entre 2 e 120 caracteres.")]
