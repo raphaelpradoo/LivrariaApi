@@ -18,6 +18,7 @@ public class BookController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Get()
     {
         if (Livraria.Livros.Any() == false)
@@ -28,6 +29,7 @@ public class BookController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Get(Guid id)
     {
         var livro = Livraria.Livros.FirstOrDefault(l => l.Id == id);
@@ -40,7 +42,9 @@ public class BookController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(ResponseBookJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Create([FromBody] RequestBookJson request) 
     {
         // Verifica se já existe livro com o mesmo título
@@ -67,6 +71,9 @@ public class BookController : ControllerBase
 
     [HttpPost("create-list")]
     [ProducesResponseType(typeof(IEnumerable<ResponseBookJson>), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Create([FromBody] List<RequestBookJson> requests)
     {
         var titlesExistentes = Livraria.Livros
@@ -94,8 +101,10 @@ public class BookController : ControllerBase
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Update(Guid id, [FromBody] RequestBookJson request) 
     {
         // Verifica se o livro a ser editado existe
@@ -124,6 +133,7 @@ public class BookController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult Delete(Guid id) 
     {
         // Verifica se o livro a ser excluido existe
