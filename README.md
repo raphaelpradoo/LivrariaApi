@@ -53,7 +53,7 @@ Este projeto segue a proposta apresentada no curso, com possíveis adaptações 
 
 ## 📌 Status do Projeto
 
-✅ Em desenvolvimento
+✅ Concluido
 
 ---
 
